@@ -1,6 +1,6 @@
-import './bots/shielkwamm'
-import './bots/arbitrat0r'
-import './bots/chatb0t'
-import './bots/arbitrat0r'
-import './bots/operat0r'
-import './bots/informati0n'
+require('./bots/shielkwamm.js')
+require('./bots/arbitrat0r.js')
+require('./bots/chatb0t.js')
+require('./bots/arbitrat0r.js')
+require('./bots/operat0r.js')
+require('./bots/informati0n.js')
