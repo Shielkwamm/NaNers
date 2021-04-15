@@ -9,7 +9,7 @@ const client = new Discord.Client();
 const prefix = '$';
 
 client.once('ready', () => {
-  console.log("Online")
+  console.log("OP Online")
 })
 
 var rooms;
@@ -43,8 +43,6 @@ main().catch((error) => console.error(error))
 client.on('message', message => {
   let room = rooms.find((room) => room.name === message.channel.name)
 
-  insertMessage(room._id, message.author.username + " : " + message.content);
-
   if(!message.content.startsWith(prefix) || message.author.bot) return;
   const args = message.content.slice(prefix.length).split(/ +/);
   const command = args.shift();
@@ -69,34 +67,4 @@ client.on('message', message => {
   }
 })
 
-client.login(process.env.DISCORD); 
-
-async function insertMessage(roomId, message) {
-  const endpoint = 'https://one-zork.herokuapp.com/graphql'
-  const graphQLClient = new GraphQLClient(endpoint, {
-    Headers: {
-      apiKey: process.env.VULCAN,
-    },
-  });
-  const variables = {
-    createMessageInput: {
-      data: {
-        roomId: roomId,
-        text: message
-      }
-    }
-  }
-  const mutation = gql`
-    mutation CreateMessageMutation($createMessageInput: CreateMessageInput) {
-      createMessage(input: $createMessageInput) {
-        data {
-          roomId,
-          text
-        }
-      }
-    }
-  `;
-
-  const results = await graphQLClient.request(mutation, variables);
-  console.log(results);
-}
+client.login(process.env.DISCORD_OP);
