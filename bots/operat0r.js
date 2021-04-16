@@ -15,7 +15,7 @@ client.once('ready', () => {
 var rooms;
 
 async function main() {
-  const endpoint = 'https://one-zork.herokuapp.com/graphql'
+  const endpoint = 'https://sh.shielkwamm.com/graphql'
   const graphQLClient = new GraphQLClient(endpoint, {
     Headers: {
       apiKey: process.env.VULCAN,

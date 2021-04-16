@@ -17,12 +17,8 @@ client.once('ready', () => {
 var rooms;
 
 async function main() {
-  const endpoint = 'https://one-zork.herokuapp.com/graphql'
-  const graphQLClient = new GraphQLClient(endpoint, {
-    Headers: {
-      apiKey: process.env.VULCAN,
-    },
-  })
+  const endpoint = 'https://sh.shielkwamm.com/graphql'
+  const graphQLClient = new GraphQLClient(endpoint)
   const query = gql`
     {
       rooms {
@@ -48,34 +44,17 @@ client.on('message', message => {
   if(!message.content.startsWith(prefix) || message.author.bot) return;
   const args = message.content.slice(prefix.length).split(/ +/);
   const command = args.shift();
-
-  if(command === 'getRandomCatFact') {
-    const req = https.get('https://cat-fact.herokuapp.com/facts/random?animal_type=cat&amount=1', (res) => {
-    res.setEncoding('utf8');
-    let catFact = "";
-    res.on('data', (d) => {
-      catFact += d;
-    })
-    res.on('end', () => {console.log("content ", message.content)
-    console.log("channel name", message.channel.name)
-    console.log("author", message.author.username)
-      const catFacts = JSON.parse(catFact);
-      message.channel.send(catFacts.text)
-    })
-  })
-  }
 })
 
 client.login(process.env.DISCORD_SH);
 
 
 async function insertMessage(roomId, message) {
-  const endpoint = 'https://one-zork.herokuapp.com/graphql'
+  const endpoint = 'https://sh.shielkwamm.com/graphql'
   const graphQLClient = new GraphQLClient(endpoint, {
-    Headers: {
-      apiKey: process.env.VULCAN,
-    },
+    headers: {apiKey: process.env.VULCAN}
   });
+  //graphQLClient.setHeader({apiKey: process.env.VULCAN});
   const variables = {
     createMessageInput: {
       data: {
@@ -96,5 +75,4 @@ async function insertMessage(roomId, message) {
   `;
 
   const results = await graphQLClient.request(mutation, variables);
-  console.log(results);
 }

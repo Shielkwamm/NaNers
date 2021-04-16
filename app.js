@@ -1,3 +1,10 @@
+const { Headers } = require('cross-fetch');
+
+// @ts-ignore
+global.Headers = global.Headers || Headers;
+
+//{apiKey: process.env.VULCAN}
+
 require('./bots/shielkwamm.js')
 require('./bots/arbitrat0r.js')
 require('./bots/chatb0t.js')
